@@ -32,8 +32,7 @@ public class GraphicsDisplay extends JPanel {
         // Цвет заднего фона области отображения - белый
         setBackground(Color.WHITE);
 
-        graphicsStroke = new BasicStroke(2.0f, BasicStroke.CAP_BUTT,
-                BasicStroke.JOIN_ROUND, 10.0f, new float[]{5,1,2,1,2,1,5,1,1,1}, 0.0f);
+        graphicsStroke = new BasicStroke(2.0f);
 
         // Перо для рисования осей координат
         axisStroke = new BasicStroke(2.0f, BasicStroke.CAP_BUTT,
@@ -176,20 +175,21 @@ public class GraphicsDisplay extends JPanel {
 
             // Размер маркера
             int size = 11; // Общий размер
-
-            // Рисуем asterisk
             int halfSize = size / 2;
 
-            // Рисуем горизонтальные линии
             canvas.draw(new Line2D.Double(center.getX() - halfSize, center.getY(), center.getX() + halfSize, center.getY()));
-            // Рисуем вертикальные линии
             canvas.draw(new Line2D.Double(center.getX(), center.getY() - halfSize, center.getX(), center.getY() + halfSize));
-            // Рисуем диагонали
             canvas.draw(new Line2D.Double(center.getX() - halfSize, center.getY() - halfSize, center.getX() + halfSize, center.getY() + halfSize));
             canvas.draw(new Line2D.Double(center.getX() - halfSize, center.getY() + halfSize, center.getX() + halfSize, center.getY() - halfSize));
+
+            // Устанавливаем цвет для подписи
+            canvas.setColor(Color.BLACK);
+            // Отображаем значение y рядом с маркером
+            String yValue = String.format("%.2f", point[1]);
+            canvas.drawString(yValue, (float) center.getX() + 5, (float) center.getY() + 40);
         }
     }
-    // Метод для проверки, превышает ли значение функции в данной точке
+    //меттод для проверки, превышает ли значение функции в данной точке
 // более чем в два раза среднее значение функции на всѐм интервале
     private boolean exceedsTwiceAverage(double value) {
         double total = 0.0;
